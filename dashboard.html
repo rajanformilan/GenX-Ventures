@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <style>
+    body { font-family: Arial; background: #f2f2f2; padding: 20px; }
+    .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    h2 { color: #4a148c; }
+    select, input, button { padding: 10px; margin: 10px 0; width: 100%; border-radius: 4px; border: 1px solid #ccc; }
+    button { background-color: #4a148c; color: white; border: none; cursor: pointer; }
+    .history { margin-top: 20px; max-height: 200px; overflow-y: auto; background: #fafafa; padding: 10px; border-radius: 5px; }
+    .entry { border-bottom: 1px solid #ddd; padding: 5px 0; font-size: 14px; }
+    .withdraw { color: red; }
+    .deposit { color: green; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Admin Dashboard</h2>
+
+    <label>Select User by Email:</label>
+    <select id="userSelect" onchange="loadUser()">
+      <option value="">-- Choose a User --</option>
+    </select>
+
+    <div id="userDetails" style="display:none;">
+      <p><strong>Balance:</strong> Rs <span id="userBalance">0.00</span></p>
+
+      <input type="number" id="amountInput" placeholder="Amount (Rs)" />
+      <button onclick="addBalance()">Add Deposit</button>
+      <button onclick="addInterest()">Add Interest</button>
+
+      <div class="history">
+        <strong>Transaction History</strong>
+        <div id="transactionList"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let selectedEmail = "";
+    let selectedUser = null;
+
+    function loadUsers() {
+      const allUsers = JSON.parse(localStorage.getItem("allUsersData")) || {};
+      const userSelect = document.getElementById("userSelect");
+
+      userSelect.innerHTML = '<option value="">-- Choose a User --</option>';
+      Object.keys(allUsers).forEach(email => {
+        const option = document.createElement("option");
+        option.value = email;
+        option.textContent = email;
+        userSelect.appendChild(option);
+      });
+    }
+
+    function loadUser() {
+      const email = document.getElementById("userSelect").value;
+      if (!email) return;
+
+      const allUsers = JSON.parse(localStorage.getItem("allUsersData")) || {};
+      selectedEmail = email;
+      selectedUser = allUsers[email];
+
+      document.getElementById("userDetails").style.display = "block";
+      document.getElementById("userBalance").textContent = selectedUser.balance.toFixed(2);
+      renderHistory();
+    }
+
+    function saveUserData() {
+      const allUsers = JSON.parse(localStorage.getItem("allUsersData")) || {};
+      allUsers[selectedEmail] = selectedUser;
+      localStorage.setItem("allUsersData", JSON.stringify(allUsers));
+    }
+
+    function renderHistory() {
+      const container = document.getElementById("transactionList");
+      container.innerHTML = "";
+      selectedUser.transactions.slice().reverse().forEach(tx => {
+        const div = document.createElement("div");
+        div.className = `entry ${tx.type.toLowerCase()}`;
+        div.textContent = `${tx.date} - ${tx.type}: Rs. ${tx.amount.toFixed(2)}`;
+        container.appendChild(div);
+      });
+    }
+
+    function addBalance() {
+      const amount = parseFloat(document.getElementById("amountInput").value);
+      if (isNaN(amount) || amount <= 0) {
+        alert("Enter a valid amount.");
+        return;
+      }
+
+      selectedUser.balance += amount;
+      selectedUser.transactions.push({
+        type: "Deposit",
+        amount,
+        date: new Date().toLocaleString()
+      });
+
+      saveUserData();
+      loadUser();
+      alert(`Rs ${amount} added to ${selectedEmail}`);
+    }
+
+    function addInterest() {
+      const interest = selectedUser.interest || 3; // default 3%
+      const earnings = (selectedUser.balance * interest) / 100;
+
+      selectedUser.balance += earnings;
+      selectedUser.transactions.push({
+        type: "Interest",
+        amount: earnings,
+        date: new Date().toLocaleString()
+      });
+
+      saveUserData();
+      loadUser();
+      alert(`Rs ${earnings.toFixed(2)} interest added to ${selectedEmail}`);
+    }
+
+    // Initial
+    loadUsers();
+  </script>
+</body>
+</html>

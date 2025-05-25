@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GenX Ventures</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    #homepageBalance {
+      font-size: 24px;
+      color: #4a148c;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .wallet-section {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 30px auto;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    .wallet-section h2 {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">GenX Ventures</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="signup.html">Signin</a></li>
+        <li><a href="#startups">Startups</a></li>
+        <li><a href="#invest">Invest</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Fueling the Future</h1>
+    <p>We invest in bold startups shaping tomorrow's world.</p>
+    <a href="#invest" class="btn">Become Investor</a>
+  </section>
+
+  <!-- Wallet Balance Section -->
+  <section id="wallet" class="wallet-section">
+    <h2>Your Wallet Balance</h2>
+    <div id="homepageBalance">Loading...</div>
+    <br>
+    <a href="balance.html" class="btn" style="text-decoration: none; padding: 10px 20px; background-color: #4a148c; color: white; border-radius: 5px;">Open Wallet</a>
+  </section>
+
+  <section id="about" class="section">
+    <h2>About Us</h2>
+    <p>GenX Ventures supports visionary founders building next-gen technology in AI, robotics, biotech, and beyond.</p>
+  </section>
+
+  <section id="startups" class="section">
+    <h2>Our Startups</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3>NeuroBot</h3>
+        <p>AI-powered healthcare diagnostics</p>
+      </div>
+      <div class="card">
+        <h3>AgroNext</h3>
+        <p>Robotics in smart agriculture</p>
+      </div>
+      <div class="card">
+        <h3>SkyDrive</h3>
+        <p>Urban air mobility solutions</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="invest" class="section">
+    <h2>Investment Plans</h2>
+    <div class="plan-cards">
+      <div class="plan-card">
+        <h3>🐣 Starter Chick</h3>
+        <p>Invest: NPR 500 – 5,000</p>
+        <ul>
+          <li>Great for beginners</li>
+          <li>Monthly growth tips</li>
+          <li>Community access</li>
+        </ul>
+        <a href="paymelord.html" class="buy-btn">Buy Plan</a>
+      </div>
+      <div class="plan-card">
+        <h3>🐯 Tiger Booster</h3>
+        <p>Invest: NPR 5,001 – 50,000</p>
+        <ul>
+          <li>Mid-tier ROI</li>
+          <li>Startup entry access</li>
+          <li>Investment guidance</li>
+        </ul>
+        <a href="paymelord.html" class="buy-btn">Buy Plan</a>
+      </div>
+      <div class="plan-card">
+        <h3>🦄 Unicorn Vision</h3>
+        <p>Invest: NPR 50,001+</p>
+        <ul>
+          <li>Top-tier opportunities</li>
+          <li>Direct startup connections</li>
+          <li>Special rewards</li>
+        </ul>
+        <a href="paymelord.html" class="buy-btn">Buy Plan</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section contact">
+    <h2>Contact Us</h2>
+    <p>Email: info@genxventures.com</p>
+    <p>Location: Kathmandu, Nepal</p>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; 2025 GenX Ventures. All rights reserved.</p>
+  </footer>
+
+  <!-- Script to load balance -->
+  <script>
+    function loadHomepageBalance() {
+      const investmentData = JSON.parse(localStorage.getItem("investmentData"));
+      const balanceBox = document.getElementById("homepageBalance");
+
+      if (investmentData && investmentData.balance != null) {
+        balanceBox.textContent = "Rs. " + investmentData.balance.toFixed(2);
+      } else {
+        balanceBox.textContent = "No balance data available.";
+      }
+    }
+
+    loadHomepageBalance();
+  </script>
+</body>
+</html>

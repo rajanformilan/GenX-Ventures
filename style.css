@@ -1,0 +1,230 @@
+/* Reset and base setup */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #f8f9fa;
+  color: #333;
+}
+
+/* Navbar */
+.navbar {
+  background: #101820;
+  color: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(to right, #101820, #303840);
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+.btn {
+  background: #fdb813;
+  color: #101820;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+/* Section Styling */
+.section {
+  padding: 3rem 2rem;
+  max-width: 1000px;
+  margin: auto;
+}
+.section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Card Grid */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+.card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Plan Cards */
+.plan-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+.plan-card {
+  background: white;
+  border: 2px solid #4a148c;
+  border-radius: 10px;
+  padding: 1.5rem;
+  width: 280px;
+  text-align: left;
+}
+.plan-card h3 {
+  color: #4a148c;
+}
+
+/* Buy Button */
+.buy-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #6a1b9a;
+  color: white;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.buy-btn:hover {
+  background-color: #8e24aa;
+}
+
+/* Contact Section */
+.contact p {
+  margin: 0.5rem 0;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background: #101820;
+  color: #fff;
+}
+
+/* Wallet Section on Homepage */
+.wallet-section {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 30px auto;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+#wallet h2 {
+  color: #4a148c;
+}
+#homepageBalance {
+  font-size: 24px;
+  color: #4a148c;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Auth Pages */
+.auth-box {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 2rem;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  text-align: center;
+  border-radius: 8px;
+}
+.auth-box input {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.auth-box button {
+  padding: 0.75rem 2rem;
+  background: #101820;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.auth-box button:hover {
+  background: #333;
+}
+
+/* Balance Page Specific (use class "balance-page" on body) */
+.balance-page {
+  background: linear-gradient(135deg, #4a148c, #880e4f);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.balance-page .balance-box {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 40px 50px;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+  text-align: center;
+  width: 320px;
+}
+.balance-page .balance-box h2 {
+  margin-bottom: 15px;
+  font-weight: 700;
+  font-size: 28px;
+}
+.balance-page .balance-box h3 {
+  margin: 10px 0 20px;
+  font-size: 26px;
+  color: #ffeb3b;
+  font-weight: 600;
+}
+.balance-page .balance-box p {
+  font-size: 14px;
+  color: #ddd;
+  margin-bottom: 30px;
+}
+.balance-page .balance-box button {
+  background-color: #ffeb3b;
+  border: none;
+  border-radius: 8px;
+  color: #4a148c;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 12px 0;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.balance-page .balance-box button:hover {
+  background-color: #fbc02d;
+}

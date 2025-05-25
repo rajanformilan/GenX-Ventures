@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Withdraw Balance</title>
+  <style>
+    body { font-family: Arial; padding: 40px; background: #f4f4f4; text-align: center; }
+    .card { background: #fff; padding: 25px; border-radius: 8px; max-width: 400px; margin: auto; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    input, button, textarea { width: 100%; padding: 10px; margin-top: 10px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box; }
+    button { background-color: #4a148c; color: #fff; border: none; cursor: pointer; }
+    h2 { color: #4a148c; }
+    .history { text-align: left; margin-top: 20px; background: #fafafa; padding: 10px; border-radius: 5px; max-height: 200px; overflow-y: auto; }
+    .entry { padding: 5px 0; border-bottom: 1px solid #ddd; font-size: 14px; }
+    .withdraw { color: red; }
+    .deposit { color: green; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Withdraw Funds</h2>
+    <p><strong>Balance:</strong> Rs <span id="balanceDisplay">0.00</span></p>
+
+    <input type="text" id="username" placeholder="Your Name" required />
+    <input type="email" id="email" placeholder="Your Email" required />
+    <textarea id="bankInfo" placeholder="Bank / Wallet Info" required></textarea>
+    <input type="number" id="withdrawAmount" placeholder="Withdraw Amount (Min Rs 100)" required />
+    <button onclick="withdraw()">Request Withdraw</button>
+
+    <div class="history">
+      <strong>Transaction History</strong>
+      <div id="historyList">Loading...</div>
+    </div>
+  </div>
+
+  <script>
+    const data = JSON.parse(localStorage.getItem("investmentData")) || {
+      balance: 0,
+      transactions: [],
+      interest: 3,
+      lastUpdated: new Date().toDateString()
+    };
+
+    document.getElementById("balanceDisplay").textContent = data.balance.toFixed(2);
+
+    function renderHistory() {
+      const historyList = document.getElementById("historyList");
+      historyList.innerHTML = "";
+      if (!data.transactions.length) {
+        historyList.innerHTML = "<p>No transactions found.</p>";
+        return;
+      }
+      data.transactions.slice().reverse().forEach(tx => {
+        const div = document.createElement("div");
+        div.className = `entry ${tx.type.toLowerCase()}`;
+        div.textContent = `${tx.date} - ${tx.type}: Rs. ${tx.amount.toFixed(2)}`;
+        historyList.appendChild(div);
+      });
+    }
+
+    function withdraw() {
+      const name = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const bank = document.getElementById("bankInfo").value.trim();
+      const amount = parseFloat(document.getElementById("withdrawAmount").value);
+
+      if (!name || !email || !bank || isNaN(amount)) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      if (amount < 100) {
+        alert("Minimum withdraw is Rs 100.");
+        return;
+      }
+
+      if (amount > data.balance) {
+        alert("Insufficient balance.");
+        return;
+      }
+
+      data.balance -= amount;
+      data.transactions.push({
+        type: "Withdraw",
+        amount: amount,
+        date: new Date().toLocaleString(),
+        user: name,
+        email: email,
+        bank: bank
+      });
+
+      localStorage.setItem("investmentData", JSON.stringify(data));
+      alert(`Withdraw request submitted by ${name} for Rs ${amount}.`);
+      document.getElementById("balanceDisplay").textContent = data.balance.toFixed(2);
+      renderHistory();
+    }
+
+    renderHistory();
+  </script>
+</body>
+</html>
