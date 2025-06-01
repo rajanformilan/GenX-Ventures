@@ -24,6 +24,70 @@
     .wallet-section h2 {
       margin-bottom: 10px;
     }
+    .plan-cards {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .plan-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      width: 280px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .buy-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #4a148c;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    /* Modal Styles */
+    #buyPlanModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    #buyPlanModal > div {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 420px;
+      width: 90%;
+      box-sizing: border-box;
+    }
+    #planOptions label {
+      display: block;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    #planOptions input[type="radio"] {
+      margin-right: 8px;
+    }
+    #buyPlanModal button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #buyPlanModal button[type="submit"] {
+      background-color: #4a148c;
+      color: white;
+    }
+    #buyPlanModal button[type="button"] {
+      background: #ccc;
+      margin-left: 10px;
+    }
   </style>
 </head>
 <body>
@@ -34,6 +98,7 @@
         <li><a href="signup.html">Signin</a></li>
         <li><a href="#startups">Startups</a></li>
         <li><a href="#invest">Invest</a></li>
+        <li><a href="admin-login.html">Admin</a></li>
       </ul>
     </nav>
   </header>
@@ -86,7 +151,7 @@
           <li>Monthly growth tips</li>
           <li>Community access</li>
         </ul>
-        <a href="paymelord.html" class="buy-btn">Buy Plan</a>
+        <a href="#" class="buy-btn" onclick="openPlan('Starter Chick')">Buy Plan</a>
       </div>
       <div class="plan-card">
         <h3>🐯 Tiger Booster</h3>
@@ -96,7 +161,7 @@
           <li>Startup entry access</li>
           <li>Investment guidance</li>
         </ul>
-        <a href="paymelord.html" class="buy-btn">Buy Plan</a>
+        <a href="#" class="buy-btn" onclick="openPlan('Tiger Booster')">Buy Plan</a>
       </div>
       <div class="plan-card">
         <h3>🦄 Unicorn Vision</h3>
@@ -106,7 +171,7 @@
           <li>Direct startup connections</li>
           <li>Special rewards</li>
         </ul>
-        <a href="paymelord.html" class="buy-btn">Buy Plan</a>
+        <a href="#" class="buy-btn" onclick="openPlan('Unicorn Vision')">Buy Plan</a>
       </div>
     </div>
   </section>
@@ -121,7 +186,20 @@
     <p>&copy; 2025 GenX Ventures. All rights reserved.</p>
   </footer>
 
-  <!-- Script to load balance -->
+  <!-- Buy Plan Modal (No Fees) -->
+  <div id="buyPlanModal">
+    <div>
+      <h2 id="modalPlanName">Choose Your Investment</h2>
+      <form id="buyForm">
+        <div id="planOptions"></div>
+        <br />
+        <button type="submit">Confirm Purchase</button>
+        <button type="button" onclick="closeModal()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Script to load balance and handle Buy Plan modal -->
   <script>
     function loadHomepageBalance() {
       const investmentData = JSON.parse(localStorage.getItem("investmentData"));
@@ -133,6 +211,52 @@
         balanceBox.textContent = "No balance data available.";
       }
     }
+
+    const planData = {
+      "Starter Chick": [500, 2000, 5000],
+      "Tiger Booster": [10000, 25000, 50000],
+      "Unicorn Vision": [60000, 100000, 200000]
+    };
+
+    let currentPlan = "";
+
+    function openPlan(planName) {
+      currentPlan = planName;
+      document.getElementById("modalPlanName").textContent = "Buy: " + planName;
+      const optionsContainer = document.getElementById("planOptions");
+      optionsContainer.innerHTML = "";
+
+      planData[planName].forEach(amount => {
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = "amount";
+        radio.value = amount;
+        radio.required = true;
+
+        const label = document.createElement("label");
+        label.innerHTML = ` NPR ${amount.toLocaleString()}`;
+        label.prepend(radio);
+        optionsContainer.appendChild(label);
+      });
+
+      document.getElementById("buyPlanModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("buyPlanModal").style.display = "none";
+    }
+
+    document.getElementById("buyForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const selected = document.querySelector('input[name="amount"]:checked');
+  if (selected) {
+    const amount = parseInt(selected.value);
+    const encodedPlan = encodeURIComponent(currentPlan);
+    const redirectURL = `paymelord.html?plan=${encodedPlan}&amount=${amount}`;
+    window.location.href = redirectURL;
+  }
+});
+
 
     loadHomepageBalance();
   </script>
