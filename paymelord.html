@@ -19,13 +19,15 @@
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
     .qr-container img {
-      width: 250px;
-      height: 250px;
-    }"
+      display: none; /* Hidden initially */
+      max-width: 100%; /* Responsive */
+      height: auto;
+    }
     .instruction {
       margin-top: 15px;
       font-size: 18px;
       color: #333;
+      display: none; /* Hidden initially */
     }
   </style>
 </head>
@@ -33,13 +35,17 @@
 
   <h2>Pay with Khalti</h2>
   <div class="qr-container">
-    <!-- Replace this with the actual image path of your QR code -->
-    
-    
-    <img src="Screenshot_2025-05-24-17-37-55-985_com.miui.gallery.jpg" alt="Scan to Pay via Khalti" />
-    
-    <div" class="instruction">Scan this code with Khalti App to pay</div>
+    <img id="qrImage" src="Screenshot_2025-05-24-17-37-55-985_com.miui.gallery.jpg" alt="Scan to Pay via Khalti" />
+    <div id="instructionText" class="instruction">Scan this code with Khalti App to pay</div>
   </div>
+
+  <script>
+    // Show image and instruction after 5 seconds
+    setTimeout(() => {
+      document.getElementById('qrImage').style.display = 'block';
+      document.getElementById('instructionText').style.display = 'block';
+    }, 5000);
+  </script>
 
 </body>
 </html>
