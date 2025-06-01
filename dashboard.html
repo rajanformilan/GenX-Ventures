@@ -20,16 +20,17 @@
   <div class="container">
     <h2>Admin Dashboard</h2>
 
-    <label>Select User by Email:</label>
+    <label>Select User by username:</label>
     <select id="userSelect" onchange="loadUser()">
       <option value="">-- Choose a User --</option>
     </select>
 
     <div id="userDetails" style="display:none;">
-      <p><strong>Balance:</strong> Rs <span id="userBalance">0.00</span></p>
+      <p><strong>Balance:</strong> Rs <span id="userBalance">20.00</span></p>
 
       <input type="number" id="amountInput" placeholder="Amount (Rs)" />
       <button onclick="addBalance()">Add Deposit</button>
+      <button onclick="deductBalance()">Deduct Withdraw</button>
       <button onclick="addInterest()">Add Interest</button>
 
       <div class="history">
@@ -123,6 +124,32 @@
 
     // Initial
     loadUsers();
+    
+    function deductBalance() {
+  const amount = parseFloat(document.getElementById("amountInput").value);
+  if (isNaN(amount) || amount <= 0) {
+    alert("Enter a valid amount.");
+    return;
+  }
+
+  if (amount > selectedUser.balance) {
+    alert("Insufficient balance.");
+    return;
+  }
+
+  selectedUser.balance -= amount;
+  selectedUser.transactions.push({
+    type: "Withdraw",
+    amount,
+    date: new Date().toLocaleString()
+  });
+
+  saveUserData();
+  loadUser();
+  alert(`Rs ${amount} withdrawn from ${selectedEmail}`);
+}
+
+    
   </script>
 </body>
 </html>
