@@ -1,117 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Your Balance - GenX Ventures</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Wallet – GenX Ventures</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #4a148c, #880e4f);
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
     }
-
-    .balance-box {
-      background-color: rgba(255, 255, 255, 0.1);
-      padding: 40px 50px;
-      border-radius: 15px;
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.15);
+    .wallet-container {
+      background: white;
+      max-width: 450px;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
       text-align: center;
-      width: 320px;
     }
-
-    .balance-box h2 {
-      margin-bottom: 15px;
-      font-weight: 700;
-      font-size: 28px;
-    }
-
-    .balance-box h3 {
-      margin: 10px 0 20px;
-      font-size: 26px;
-      color: #ffeb3b;
-      font-weight: 600;
-    }
-
-    .balance-box p {
-      font-size: 14px;
-      color: #ddd;
-      margin-bottom: 30px;
-    }
-
-    .balance-box button {
-      background-color: #ffeb3b;
-      border: none;
-      border-radius: 8px;
+    h2 {
       color: #4a148c;
-      font-weight: 700;
-      font-size: 16px;
-      padding: 12px 0;
-      width: 100%;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
     }
-
-    .balance-box button:hover {
-      background-color: #fbc02d;
+    #balance {
+      font-size: 28px;
+      margin-top: 10px;
+      color: green;
+      font-weight: bold;
+    }
+    .ref-section, .actions {
+      margin-top: 30px;
+    }
+    .ref-link {
+      word-break: break-all;
+      color: #4a148c;
+    }
+    button {
+      background: #4a148c;
+      color: white;
+      padding: 12px 20px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #6a1b9a;
     }
   </style>
 </head>
 <body>
-  <div class="balance-box">
-    <h2>Welcome, <span id="username"></span></h2>
-    <h3>Your Balance: Rs <span id="balance"></span> NPR</h3>
-    <p>Last Updated: <span id="lastUpdated"></span></p>
-    <button onclick="withdraw()">Withdraw</button>
+  <div class="wallet-container">
+    <h2>Welcome to Your Wallet</h2>
+    <div id="username">User: </div>
+    <div id="balance">Loading...</div>
+
+    <div class="ref-section">
+      <h3>Your Referral Link</h3>
+      <a id="refLink" class="ref-link" href="#" target="_blank">Loading...</a>
+    </div>
+
+    <div class="actions">
+      <button onclick="location.href='withdraw.html'">Withdraw</button>
+      <br />
+      <button onclick="logout()">Logout</button>
+    </div>
   </div>
 
   <script>
-    const username = localStorage.getItem('loggedInUser');
-    if (!username) {
-      alert('You must login first.');
-      window.location.href = 'login.html';
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    const usernameBox = document.getElementById("username");
+    const balanceBox = document.getElementById("balance");
+    const refLinkBox = document.getElementById("refLink");
+
+    if (!user) {
+      alert("Please log in first.");
+      window.location.href = "signup.html";
+    } else {
+      usernameBox.textContent = `User: ${user.username}`;
+      balanceBox.textContent = `Rs. ${user.balance.toFixed(2)}`;
+      const link = `signup.html?ref=${user.username}`;
+      refLinkBox.href = link;
+      refLinkBox.textContent = link;
     }
 
-    const userData = JSON.parse(localStorage.getItem(username));
-    const today = new Date().toDateString();
-    const conversionRate = 133; // 1 USD = 133 NPR
-
-    // Force balance to Rs 20 (i.e. 0.1504 USD)
-    userData.balance = 0.1504;
-
-    if (!userData.lastUpdate) userData.lastUpdate = today;
-
-    if (userData.lastUpdate !== today) {
-      const oldDate = new Date(userData.lastUpdate);
-      const currentDate = new Date(today);
-      const daysPassed = Math.floor((currentDate - oldDate) / (1000 * 60 * 60 * 24));
-
-      for (let i = 0; i < daysPassed; i++) {
-        const dailyRate = Math.random() * (0.12 - 0.02) + 0.02;
-        userData.balance += userData.balance * dailyRate;
-      }
-
-      userData.lastUpdate = today;
-      localStorage.setItem(username, JSON.stringify(userData));
-    }
-
-    const balanceInNPR = userData.balance * conversionRate;
-
-    document.getElementById('username').textContent = username;
-    document.getElementById('balance').textContent = balanceInNPR.toFixed(2);
-    document.getElementById('lastUpdated').textContent = userData.lastUpdate;
-
-    function withdraw() {
-      window.location.href = "withdraw.html";
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      alert("You have been logged out.");
+      window.location.href = "signup.html";
     }
   </script>
 </body>
