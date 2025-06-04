@@ -1,33 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login - GenX Ventures</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login – GenX Ventures</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 400px;
+      margin: 80px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #4a148c;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: #4a148c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    p {
+      text-align: center;
+      margin-top: 15px;
+    }
+    a {
+      color: #4a148c;
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
-  <div class="auth-box">
-    <h2>Login</h2>
-    <input type="text" id="loginUsername" placeholder="Username">
-    <input type="password" id="loginPassword" placeholder="Password">
-    <button onclick="login()">Login</button>
-    <p>Don't have an account? <a href="signup.html">Signup</a></p>
+  <div class="container">
+    <h2>Login to GenX Ventures</h2>
+    <form id="loginForm">
+      <label for="username">Username</label>
+      <input type="text" id="username" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required />
+
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
   </div>
 
   <script>
-    function login() {
-      const username = document.getElementById('loginUsername').value;
-      const password = document.getElementById('loginPassword').value;
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
 
-      const user = JSON.parse(localStorage.getItem(username));
-      if (user && user.password === password) {
-        localStorage.setItem('loggedInUser', username);
-        alert('Login successful!');
-        window.location.href = 'index.html';
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      const matchedUser = users.find(user => user.username === username && user.password === password);
+
+      if (matchedUser) {
+        localStorage.setItem("loggedInUser", JSON.stringify(matchedUser));
+        alert("Login successful!");
+        window.location.href = "balance.html"; // or dashboard.html
       } else {
-        alert('Invalid username or password.');
+        alert("Invalid username or password.");
       }
-    }
+    });
   </script>
 </body>
 </html>
