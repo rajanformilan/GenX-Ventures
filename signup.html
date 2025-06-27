@@ -90,7 +90,7 @@
         username,
         email,
         password,
-        balance: 20,
+        balance: 100,
         joinedAt: new Date().toISOString()
       };
       localStorage.setItem(`user_${username}`, JSON.stringify(newUser));
@@ -100,12 +100,12 @@
       if (referrer) {
         const refData = JSON.parse(localStorage.getItem(`user_${referrer}`));
         if (refData) {
-          refData.balance = (refData.balance || 0) + 20;
+          refData.balance = (refData.balance || 0) + 100;
           localStorage.setItem(`user_${referrer}`, JSON.stringify(refData));
         }
       }
 
-      alert("Signup successful! Rs 20 bonus credited.");
+      alert("Signup successful! Rs 100 bonus credited.");
       window.location.href = "balance.html";
     });
   </script>
