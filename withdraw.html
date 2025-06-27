@@ -19,12 +19,12 @@
 <body>
   <div class="card">
     <h2>Withdraw Funds</h2>
-    <p><strong>Balance:</strong> Rs <span id="balanceDisplay">20.00</span></p>
+    <p><strong>Balance:</strong> Rs <span id="balanceDisplay">100.00</span></p>
 
     <input type="text" id="username" placeholder="Your Name" required />
     <input type="email" id="email" placeholder="Your Email" required />
     <textarea id="bankInfo" placeholder="Bank / Wallet Info" required></textarea>
-    <input type="number" id="withdrawAmount" placeholder="Withdraw Amount (Min Rs 100)" required />
+    <input type="number" id="withdrawAmount" placeholder="Withdraw Amount (Min Rs 1000)" required />
     <button onclick="withdraw()">Request Withdraw</button>
 
     <div class="history">
@@ -35,7 +35,7 @@
 
   <script>
     const data = JSON.parse(localStorage.getItem("investmentData")) || {
-      balance: 20,
+      balance: 100,
       transactions: [],
       interest: 3,
       lastUpdated: new Date().toDateString()
@@ -69,8 +69,8 @@
         return;
       }
 
-      if (amount < 100) {
-        alert("Minimum withdraw is Rs 100.");
+      if (amount < 1000) {
+        alert("Minimum withdraw is Rs 1000.");
         return;
       }
 
