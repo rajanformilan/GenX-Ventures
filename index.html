@@ -364,6 +364,56 @@ function showAd() {
 
 window.onload = showAd;
 
+function showAd() {
+  const ads = [
+    {
+      img: "https://cdn.pixabay.com/photo/2016/11/29/04/20/stock-market-1863884_960_720.jpg",
+      text: "Grow your wealth with the stock market! Start investing today."
+    },
+    {
+      img: "https://cdn.pixabay.com/photo/2018/05/01/21/55/bitcoin-3364519_960_720.jpg",
+      text: "Trade crypto 24/7 with zero commissions! Join the revolution."
+    },
+    {
+      img: "https://cdn.pixabay.com/photo/2018/02/23/22/26/investment-3173878_960_720.jpg",
+      text: "Invest in Mutual Funds & watch your money grow safely."
+    },
+    {
+      img: "https://cdn.pixabay.com/photo/2016/11/29/03/56/architecture-1867153_960_720.jpg",
+      text: "Secure your future with real estate investments."
+    },
+    {
+      img: "https://cdn.pixabay.com/photo/2019/03/14/16/25/chart-4053699_960_720.jpg",
+      text: "Join the leading trading platform and maximize your returns."
+    },
+    {
+      img: "https://cdn.pixabay.com/photo/2017/03/01/20/00/hand-2108020_960_720.jpg",
+      text: "Plan your retirement wisely with expert investment advice."
+    },
+    {
+      img: "https://cdn.pixabay.com/photo/2019/05/10/23/41/robot-4192716_960_720.jpg",
+      text: "Let technology manage your investments efficiently."
+    }
+  ];
+
+  const randomAd = ads[Math.floor(Math.random() * ads.length)];
+  const adPopup = document.getElementById('adPopup');
+  const adImage = document.getElementById('adImage');
+  const adText = document.getElementById('adText');
+
+  adImage.src = randomAd.img;
+  adImage.alt = randomAd.text;
+  adText.textContent = randomAd.text;
+
+  adPopup.style.display = 'block';
+
+  setTimeout(() => {
+    adPopup.style.display = 'none';
+  }, 5000);
+}
+
+window.onload = showAd;
+
   </script>
 </body>
 </html>
