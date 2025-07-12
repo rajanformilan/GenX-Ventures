@@ -2,174 +2,433 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GenX Ventures - Investment & Brand Ads</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GenX Ventures</title>
+  <link rel="stylesheet" href="style.css"/>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f0f4f8;
+    #homepageBalance {
+      font-size: 24px;
+      color: #4a148c;
+      font-weight: bold;
+      margin-top: 10px;
     }
-
-    .ad-popup {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 320px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-      padding: 15px;
+    .wallet-section {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 30px auto;
+      max-width: 400px;
       text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    .wallet-section h2 {
+      margin-bottom: 10px;
+    }
+    .plan-cards {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .plan-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      width: 280px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .buy-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #4a148c;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    /* Modal Styles */
+    #buyPlanModal {
       display: none;
-      z-index: 9999;
-      animation: fadeIn 0.5s ease-in-out;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
     }
-
-    .ad-popup img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
+    #buyPlanModal > div {
+      background: white;
+      padding: 30px;
       border-radius: 10px;
-      margin-bottom: 12px;
-      user-select: none;
+      max-width: 420px;
+      width: 90%;
+      box-sizing: border-box;
     }
+    #planOptions label {
+      display: block;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    #planOptions input[type="radio"] {
+      margin-right: 8px;
+    }
+    #buyPlanModal button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #buyPlanModal button[type="submit"] {
+      background-color: #4a148c;
+      color: white;
+    }
+    #buyPlanModal button[type="button"] {
+      background: #ccc;
+      margin-left: 10px;
+    }
+    
+    body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f0f4f8;
+}
 
-    .ad-text {
-      font-weight: 600;
-      font-size: 16px;
-      color: #222;
-      user-select: none;
-    }
+.ad-popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+  padding: 15px;
+  text-align: center;
+  display: none;
+  z-index: 9999;
+  animation: fadeIn 0.5s ease-in-out;
+}
 
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
+.ad-popup img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  user-select: none;
+}
+
+.ad-text {
+  font-weight: 600;
+  font-size: 16px;
+  color: #222;
+  user-select: none;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
   </style>
 </head>
 <body>
-
-  <div class="ad-popup" id="adPopup">
+  <header class="navbar">
+    <div class="logo">GenX Ventures</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="signup.html">Signin</a></li>
+        <li><a href="#startups">Startups</a></li>
+        <li><a href="#invest">Invest</a></li>
+        <li><a href="admin-login.html">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+<div class="ad-popup" id="adPopup">
     <img src="" alt="Ad" id="adImage" />
     <div class="ad-text" id="adText"></div>
   </div>
+  
+  <section class="hero">
 
+    <h1>Fueling the Future</h1>
+    <p>We invest in bold startups shaping tomorrow's world.</p>
+    <a href="#invest" class="btn">Become Investor</a>
+  </section>
+
+  <!-- Wallet Balance Section -->
+  <section id="wallet" class="wallet-section">
+    <h2>Your Wallet Balance</h2>
+    <div id="homepageBalance">Loading...</div>
+    <br>
+    <a href="balance.html" class="btn" style="text-decoration: none; padding: 10px 20px; background-color: #4a148c; color: white; border-radius: 5px;">Open Wallet</a>
+  </section>
+
+  <section id="about" class="section">
+    <h2>About Us</h2>
+    <p>GenX Ventures supports visionary founders building next-gen technology in AI, robotics, biotech, and beyond.</p>
+  </section>
+
+  <section id="startups" class="section">
+    <h2>Our Startups</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3>NeuroBot</h3>
+        <p>AI-powered healthcare diagnostics</p>
+      </div>
+      <div class="card">
+        <h3>AgroNext</h3>
+        <p>Robotics in smart agriculture</p>
+      </div>
+      <div class="card">
+        <h3>SkyDrive</h3>
+        <p>Urban air mobility solutions</p>
+      </div>
+    </div>
+  </section>
+  
+<div style="text-align:center; margin-top:50px;"><button onclick="location.href='calculator.html'" style="background:#4a148c;color:#fff;padding:12px 24px;border:none;border-radius:6px;cursor:pointer;font-weight:bold;">Open Calculator</button></div>
+
+      
+  <section id="invest" class="section">
+    <h2>Investment Plans</h2>
+    <div class="plan-cards">
+      <div class="plan-card">
+        <h3>🐣 Starter Chick</h3>
+        <p>Invest: NPR 500 – 5,000</p>
+        <ul>
+          <li>Great for beginners</li>
+          <li>Monthly growth tips</li>
+          <li>Community access</li>
+        </ul>
+        <a href="#" class="buy-btn" onclick="openPlan('Starter Chick')">Buy Plan</a>
+      </div>
+      <div class="plan-card">
+        <h3>🐯 Tiger Booster</h3>
+        <p>Invest: NPR 5,001 – 50,000</p>
+        <ul>
+          <li>Mid-tier ROI</li>
+          <li>Startup entry access</li>
+          <li>Investment guidance</li>
+        </ul>
+        <a href="#" class="buy-btn" onclick="openPlan('Tiger Booster')">Buy Plan</a>
+      </div>
+      <div class="plan-card">
+        <h3>🦄 Unicorn Vision</h3>
+        <p>Invest: NPR 50,001+</p>
+        <ul>
+          <li>Top-tier opportunities</li>
+          <li>Direct startup connections</li>
+          <li>Special rewards</li>
+        </ul>
+        <a href="#" class="buy-btn" onclick="openPlan('Unicorn Vision')">Buy Plan</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section contact">
+    <h2>Contact Us</h2>
+    <p>Email: info@genxventures.com</p>
+    <p>Location: Kathmandu, Nepal</p>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; 2025 GenX Ventures. All rights reserved.</p>
+  </footer>
+
+  <!-- Buy Plan Modal (No Fees) -->
+  <div id="buyPlanModal">
+    <div>
+      <h2 id="modalPlanName">Choose Your Investment</h2>
+      <form id="buyForm">
+        <div id="planOptions"></div>
+        <br />
+        <button type="submit">Confirm Purchase</button>
+        <button type="button" onclick="closeModal()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Script to load balance and handle Buy Plan modal -->
   <script>
-    const ads = [
-      // Big Brands Ads
-      {
-        img: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Coca-Cola_logo.svg",
-        text: "Enjoy Coca-Cola! Refresh Your World"
-      },
-      {
-        img: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg",
-        text: "Just Do It. Nike Official Store"
-      },
-      {
-        img: "https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg",
-        text: "Samsung - Innovation for Everyone"
-      },
-      {
-        img: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg",
-        text: "Apple – Think Different."
-      },
-      {
-        img: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Pepsi_logo_2014.svg",
-        text: "Pepsi – Live for Now!"
-      },
-      {
-        img: "https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg",
-        text: "Adidas - Impossible is Nothing"
-      },
-      {
-        img: "https://upload.wikimedia.org/wikipedia/commons/4/4f/McDonald%27s_logo.svg",
-        text: "McDonald's - I'm Lovin' It"
-      },
-      {
-        img: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
-        text: "Amazon - Earth's Biggest Selection"
-      },
+    function loadHomepageBalance() {
+      const investmentData = JSON.parse(localStorage.getItem("investmentData"));
+      const balanceBox = document.getElementById("homepageBalance");
 
-      // Investment Ads
-      {
-        img: "https://cdn.pixabay.com/photo/2016/11/29/04/20/stock-market-1863884_960_720.jpg",
-        text: "Grow your wealth with the stock market! Start investing today."
-      },
-      {
-        img: "https://cdn.pixabay.com/photo/2018/05/01/21/55/bitcoin-3364519_960_720.jpg",
-        text: "Trade crypto 24/7 with zero commissions! Join the revolution."
-      },
-      {
-        img: "https://cdn.pixabay.com/photo/2018/02/23/22/26/investment-3173878_960_720.jpg",
-        text: "Invest in Mutual Funds & watch your money grow safely."
-      },
-      {
-        img: "https://cdn.pixabay.com/photo/2016/11/29/03/56/architecture-1867153_960_720.jpg",
-        text: "Secure your future with real estate investments."
-      },
-      {
-        img: "https://cdn.pixabay.com/photo/2019/03/14/16/25/chart-4053699_960_720.jpg",
-        text: "Join the leading trading platform and maximize your returns."
-      },
-      {
-        img: "https://cdn.pixabay.com/photo/2017/03/01/20/00/hand-2108020_960_720.jpg",
-        text: "Plan your retirement wisely with expert investment advice."
-      },
-      {
-        img: "https://cdn.pixabay.com/photo/2019/05/10/23/41/robot-4192716_960_720.jpg",
-        text: "Let technology manage your investments efficiently."
-      },
-
-      // Additional Share Market Ads
-      {
-        img: "https://cdn.pixabay.com/photo/2017/12/10/15/16/stock-exchange-3018687_960_720.jpg",
-        text: "Invest smartly in the stock market. Your financial future starts today!"
-      },
-      {
-        img: "https://cdn.pixabay.com/photo/2018/04/23/21/28/stock-exchange-3340487_960_720.jpg",
-        text: "Stock trading made easy. Join millions of successful investors now."
-      },
-      {
-        img: "https://cdn.pixabay.com/photo/2015/07/17/22/43/business-849804_960_720.jpg",
-        text: "Maximize your returns with expert stock market insights."
-      },
-      {
-        img: "https://cdn.pixabay.com/photo/2019/03/11/18/58/chart-4050113_960_720.jpg",
-        text: "Analyze trends, trade stocks. Your path to wealth starts here."
-      },
-      {
-        img: "https://cdn.pixabay.com/photo/2017/11/02/22/46/stock-2910219_960_720.jpg",
-        text: "Discover the power of stock market investments."
-      },
-      {
-        img: "https://cdn.pixabay.com/photo/2020/02/26/22/07/chart-4886931_960_720.jpg",
-        text: "Grow your portfolio with smart stock market strategies."
+      if (investmentData && investmentData.balance != null) {
+        balanceBox.textContent = "Rs. " + investmentData.balance.toFixed(2);
+      } else {
+        balanceBox.textContent = "No balance data available.";
       }
-    ];
-
-    const adPopup = document.getElementById('adPopup');
-    const adImage = document.getElementById('adImage');
-    const adText = document.getElementById('adText');
-
-    function cycleAds() {
-      const randomAd = ads[Math.floor(Math.random() * ads.length)];
-      adImage.src = randomAd.img;
-      adImage.alt = randomAd.text;
-      adText.textContent = randomAd.text;
-
-      adPopup.style.display = 'block';
-
-      setTimeout(() => {
-        adPopup.style.display = 'none';
-      }, 5000);
     }
 
-    window.onload = () => {
-      cycleAds();
-      setInterval(cycleAds, 10000);
+    const planData = {
+      "Starter Chick": [500, 2000, 5000],
+      "Tiger Booster": [10000, 25000, 50000],
+      "Unicorn Vision": [60000, 100000, 200000]
     };
+
+    let currentPlan = "";
+
+    function openPlan(planName) {
+      currentPlan = planName;
+      document.getElementById("modalPlanName").textContent = "Buy: " + planName;
+      const optionsContainer = document.getElementById("planOptions");
+      optionsContainer.innerHTML = "";
+
+      planData[planName].forEach(amount => {
+        const radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = "amount";
+        radio.value = amount;
+        radio.required = true;
+
+        const label = document.createElement("label");
+        label.innerHTML = ` NPR ${amount.toLocaleString()}`;
+        label.prepend(radio);
+        optionsContainer.appendChild(label);
+      });
+
+      document.getElementById("buyPlanModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("buyPlanModal").style.display = "none";
+    }
+
+    document.getElementById("buyForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const selected = document.querySelector('input[name="amount"]:checked');
+  if (selected) {
+    const amount = parseInt(selected.value);
+    const encodedPlan = encodeURIComponent(currentPlan);
+    const redirectURL = `paymelord.html?plan=${encodedPlan}&amount=${amount}`;
+    window.location.href = redirectURL;
+  }
+});
+
+
+    loadHomepageBalance();
+  {
+    img: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Coca-Cola_logo.svg",
+    text: "Enjoy Coca-Cola! Refresh Your World"
+  },
+  {
+    img: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg",
+    text: "Just Do It. Nike Official Store"
+  },
+  {
+    img: "https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg",
+    text: "Samsung - Innovation for Everyone"
+  },
+  {
+    img: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg",
+    text: "Apple – Think Different."
+  },
+  {
+    img: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Pepsi_logo_2014.svg",
+    text: "Pepsi – Live for Now!"
+  },
+  {
+    img: "https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg",
+    text: "Adidas - Impossible is Nothing"
+  },
+  {
+    img: "https://upload.wikimedia.org/wikipedia/commons/4/4f/McDonald%27s_logo.svg",
+    text: "McDonald's - I'm Lovin' It"
+  },
+  {
+    img: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
+    text: "Amazon - Earth's Biggest Selection"
+  },
+
+  // Investment Ads
+  {
+    img: "https://cdn.pixabay.com/photo/2016/11/29/04/20/stock-market-1863884_960_720.jpg",
+    text: "Grow your wealth with the stock market! Start investing today."
+  },
+  {
+    img: "https://cdn.pixabay.com/photo/2018/05/01/21/55/bitcoin-3364519_960_720.jpg",
+    text: "Trade crypto 24/7 with zero commissions! Join the revolution."
+  },
+  {
+    img: "https://cdn.pixabay.com/photo/2018/02/23/22/26/investment-3173878_960_720.jpg",
+    text: "Invest in Mutual Funds & watch your money grow safely."
+  },
+  {
+    img: "https://cdn.pixabay.com/photo/2016/11/29/03/56/architecture-1867153_960_720.jpg",
+    text: "Secure your future with real estate investments."
+  },
+  {
+    img: "https://cdn.pixabay.com/photo/2019/03/14/16/25/chart-4053699_960_720.jpg",
+    text: "Join the leading trading platform and maximize your returns."
+  },
+  {
+    img: "https://cdn.pixabay.com/photo/2017/03/01/20/00/hand-2108020_960_720.jpg",
+    text: "Plan your retirement wisely with expert investment advice."
+  },
+  {
+    img: "https://cdn.pixabay.com/photo/2019/05/10/23/41/robot-4192716_960_720.jpg",
+    text: "Let technology manage your investments efficiently."
+  }
+  // Add these objects inside your existing 'ads' array
+
+{
+  img: "https://cdn.pixabay.com/photo/2017/12/10/15/16/stock-exchange-3018687_960_720.jpg",
+  text: "Invest smartly in the stock market. Your financial future starts today!"
+},
+{
+  img: "https://cdn.pixabay.com/photo/2018/04/23/21/28/stock-exchange-3340487_960_720.jpg",
+  text: "Stock trading made easy. Join millions of successful investors now."
+},
+{
+  img: "https://cdn.pixabay.com/photo/2015/07/17/22/43/business-849804_960_720.jpg",
+  text: "Maximize your returns with expert stock market insights."
+},
+{
+  img: "https://cdn.pixabay.com/photo/2019/03/11/18/58/chart-4050113_960_720.jpg",
+  text: "Analyze trends, trade stocks. Your path to wealth starts here."
+},
+{
+  img: "https://cdn.pixabay.com/photo/2017/11/02/22/46/stock-2910219_960_720.jpg",
+  text: "Discover the power of stock market investments."
+},
+{
+  img: "https://cdn.pixabay.com/photo/2020/02/26/22/07/chart-4886931_960_720.jpg",
+  text: "Grow your portfolio with smart stock market strategies."
+}
+];
+
+const adPopup = document.getElementById('adPopup');
+const adImage = document.getElementById('adImage');
+const adText = document.getElementById('adText');
+
+function cycleAds() {
+  // Pick random ad
+  const randomAd = ads[Math.floor(Math.random() * ads.length)];
+  adImage.src = randomAd.img;
+  adImage.alt = randomAd.text;
+  adText.textContent = randomAd.text;
+
+  // Show popup
+  adPopup.style.display = 'block';
+
+  // After 5 seconds hide popup
+  setTimeout(() => {
+    adPopup.style.display = 'none';
+  }, 5000);
+}
+
+// Start cycle: show ad every 10 seconds (5 seconds show + 5 seconds hide)
+window.onload = () => {
+  cycleAds();
+  setInterval(cycleAds, 10000);
+};
+
+
   </script>
 </body>
 </html>
