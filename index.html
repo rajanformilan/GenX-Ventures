@@ -88,6 +88,48 @@
       background: #ccc;
       margin-left: 10px;
     }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+}
+
+.ad-popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  background: white;
+  border: 2px solid #ccc;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  z-index: 9999;
+  padding: 15px;
+  border-radius: 10px;
+  display: none;
+  animation: fadeIn 0.5s ease-in-out;
+  text-align: center;
+}
+
+.ad-popup img {
+  width: 150px;
+  height: auto;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 0 2px rgba(0,0,0,0.2));
+}
+
+.ad-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: #222;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
   </style>
 </head>
 <body>
@@ -102,6 +144,10 @@
       </ul>
     </nav>
   </header>
+<div class="ad-popup" id="adPopup">
+    <img src="" alt="Ad Logo" id="adImage" />
+    <div class="ad-text" id="adText"></div>
+  </div>
 
   <section class="hero">
 
@@ -263,6 +309,60 @@
 
 
     loadHomepageBalance();
+
+function showAd() {
+  const ads = [
+    {
+      img: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Coca-Cola_logo.svg",
+      text: "Enjoy Coca-Cola! Refresh Your World"
+    },
+    {
+      img: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg",
+      text: "Just Do It. Nike Official Store"
+    },
+    {
+      img: "https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg",
+      text: "Samsung - Innovation for Everyone"
+    },
+    {
+      img: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg",
+      text: "Apple – Think Different."
+    },
+    {
+      img: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Pepsi_logo_2014.svg",
+      text: "Pepsi – Live for Now!"
+    },
+    {
+      img: "https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg",
+      text: "Adidas - Impossible is Nothing"
+    },
+    {
+      img: "https://upload.wikimedia.org/wikipedia/commons/4/4f/McDonald%27s_logo.svg",
+      text: "McDonald's - I'm Lovin' It"
+    },
+    {
+      img: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
+      text: "Amazon - Earth's Biggest Selection"
+    }
+  ];
+
+  const randomAd = ads[Math.floor(Math.random() * ads.length)];
+  const adPopup = document.getElementById('adPopup');
+  const adImage = document.getElementById('adImage');
+  const adText = document.getElementById('adText');
+
+  adImage.src = randomAd.img;
+  adImage.alt = randomAd.text;
+  adText.textContent = randomAd.text;
+
+  adPopup.style.display = 'block';
+
+  setTimeout(() => {
+    adPopup.style.display = 'none';
+  }, 5000);
+}
+
+window.onload = showAd;
 
   </script>
 </body>
