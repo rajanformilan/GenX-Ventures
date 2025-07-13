@@ -95,41 +95,52 @@
   background: #f0f4f8;
 }
 
+  body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
 .ad-popup {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 320px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-  padding: 15px;
-  text-align: center;
   display: none;
+  position: fixed;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -25%);
+  width: 320px;
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid #333;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+  padding: 20px;
+  text-align: center;
   z-index: 9999;
-  animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn 0.5s ease;
 }
 
 .ad-popup img {
   width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 10px;
+  max-height: 150px;
+  object-fit: contain;
+  border-radius: 8px;
   margin-bottom: 12px;
-  user-select: none;
 }
 
-.ad-text {
-  font-weight: 600;
-  font-size: 16px;
+.ad-popup h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
   color: #222;
-  user-select: none;
+}
+
+.ad-popup p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
 }
 
 @keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
+  from { opacity: 0; transform: translate(-50%, -35%); }
+  to { opacity: 1; transform: translate(-50%, -25%); }
 }
 
   </style>
@@ -147,10 +158,11 @@
     </nav>
   </header>
   
-<div class="ad-popup" id="adPopup">
-    <img src="" alt="Ad" id="adImage" />
-    <div class="ad-text" id="adText"></div>
-  </div>
+  <div class="ad-popup" id="adPopup">
+  <img id="adImage" src="" alt="Ad Image">
+  <h3 id="adTitle">Ad Title</h3>
+  <p id="adText">Ad description</p>
+</div>
   
   <section class="hero">
 
@@ -312,122 +324,98 @@
 
 
     loadHomepageBalance();
+    
+    const ads = [
+  // 🇳🇵 Nepali Ads
   {
-    img: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Coca-Cola_logo.svg",
-    text: "Enjoy Coca-Cola! Refresh Your World"
+    title: "NIC Asia Bank",
+    text: "नेपालको सबैभन्दा छिटो सेवा दिने बैंक! लगानी गर्न सजिलो!",
+    image: "https://www.nicasiabank.com/static/media/logo.9f3c07b7.png"
   },
   {
-    img: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg",
-    text: "Just Do It. Nike Official Store"
+    title: "Nabil Invest",
+    text: "IPO, Secondary Market र Mutual Funds मा लगानी गर्नुहोस्।",
+    image: "https://www.nabilinvest.com.np/themes/images/logo.png"
   },
   {
-    img: "https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg",
-    text: "Samsung - Innovation for Everyone"
+    title: "IME Pay",
+    text: "स्मार्ट जीवनका लागि स्मार्ट वालेट - QR, बिल, रिचार्ज सजिलै!",
+    image: "https://www.imepay.com.np/images/logo.png"
   },
   {
-    img: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg",
-    text: "Apple – Think Different."
+    title: "Nepse Online",
+    text: "Nepal Stock Exchange मा अनलाइन शेयर किनबेच गर्नुहोस्।",
+    image: "https://nepsealpha.com/static/media/nepsealpha_logo.12f56434.png"
   },
   {
-    img: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Pepsi_logo_2014.svg",
-    text: "Pepsi – Live for Now!"
+    title: "Daraz Nepal",
+    text: "नेपालकै सबैभन्दा ठूलो अनलाइन शपिङ्ग प्लेटफर्म!",
+    image: "https://icms-image.slatic.net/images/ims-web/43a422c0-bde3-11ed-a74d-f60b2eaa51e6.png"
   },
   {
-    img: "https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg",
-    text: "Adidas - Impossible is Nothing"
+    title: "Bhatbhateni",
+    text: "सबैको मनपर्ने सुपरमार्केट – अब अनलाइन पनि!",
+    image: "https://bhatbhatenionline.com/images/logo.png"
   },
   {
-    img: "https://upload.wikimedia.org/wikipedia/commons/4/4f/McDonald%27s_logo.svg",
-    text: "McDonald's - I'm Lovin' It"
-  },
-  {
-    img: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
-    text: "Amazon - Earth's Biggest Selection"
+    title: "Vestige Nepal",
+    text: "आफ्नै व्यवसाय सुरु गर्नुहोस् - Vestige संग आम्दानी कमाउनुहोस्।",
+    image: "https://www.vestigeimg.com/images/logo.png"
   },
 
-  // Investment Ads
+  // 🌍 International Ads
   {
-    img: "https://cdn.pixabay.com/photo/2016/11/29/04/20/stock-market-1863884_960_720.jpg",
-    text: "Grow your wealth with the stock market! Start investing today."
+    title: "Nike – Just Do It",
+    text: "Unleash your potential with Nike's latest gear!",
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Nike_logo.svg"
   },
   {
-    img: "https://cdn.pixabay.com/photo/2018/05/01/21/55/bitcoin-3364519_960_720.jpg",
-    text: "Trade crypto 24/7 with zero commissions! Join the revolution."
+    title: "Robinhood",
+    text: "Commission-free investing in US stocks & crypto.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/3/30/Robinhood_Logo_2020.svg"
   },
   {
-    img: "https://cdn.pixabay.com/photo/2018/02/23/22/26/investment-3173878_960_720.jpg",
-    text: "Invest in Mutual Funds & watch your money grow safely."
+    title: "Groww India",
+    text: "Mutual funds, stocks & SIP – invest easily!",
+    image: "https://assets.groww.in/web-assets/img/website-logo/groww-logo-light.svg"
   },
   {
-    img: "https://cdn.pixabay.com/photo/2016/11/29/03/56/architecture-1867153_960_720.jpg",
-    text: "Secure your future with real estate investments."
+    title: "Coca-Cola",
+    text: "Open happiness with every sip. Refresh your day!",
+    image: "https://1000logos.net/wp-content/uploads/2017/05/Coca-Cola-Logo.png"
   },
   {
-    img: "https://cdn.pixabay.com/photo/2019/03/14/16/25/chart-4053699_960_720.jpg",
-    text: "Join the leading trading platform and maximize your returns."
+    title: "Amazon Global",
+    text: "Big savings on electronics, fashion, and more.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
   },
   {
-    img: "https://cdn.pixabay.com/photo/2017/03/01/20/00/hand-2108020_960_720.jpg",
-    text: "Plan your retirement wisely with expert investment advice."
-  },
-  {
-    img: "https://cdn.pixabay.com/photo/2019/05/10/23/41/robot-4192716_960_720.jpg",
-    text: "Let technology manage your investments efficiently."
+    title: "Amway Global",
+    text: "Start your business from home with Amway!",
+    image: "https://upload.wikimedia.org/wikipedia/commons/f/f9/Amway_logo.svg"
   }
-  // Add these objects inside your existing 'ads' array
-
-{
-  img: "https://cdn.pixabay.com/photo/2017/12/10/15/16/stock-exchange-3018687_960_720.jpg",
-  text: "Invest smartly in the stock market. Your financial future starts today!"
-},
-{
-  img: "https://cdn.pixabay.com/photo/2018/04/23/21/28/stock-exchange-3340487_960_720.jpg",
-  text: "Stock trading made easy. Join millions of successful investors now."
-},
-{
-  img: "https://cdn.pixabay.com/photo/2015/07/17/22/43/business-849804_960_720.jpg",
-  text: "Maximize your returns with expert stock market insights."
-},
-{
-  img: "https://cdn.pixabay.com/photo/2019/03/11/18/58/chart-4050113_960_720.jpg",
-  text: "Analyze trends, trade stocks. Your path to wealth starts here."
-},
-{
-  img: "https://cdn.pixabay.com/photo/2017/11/02/22/46/stock-2910219_960_720.jpg",
-  text: "Discover the power of stock market investments."
-},
-{
-  img: "https://cdn.pixabay.com/photo/2020/02/26/22/07/chart-4886931_960_720.jpg",
-  text: "Grow your portfolio with smart stock market strategies."
-}
 ];
 
-const adPopup = document.getElementById('adPopup');
-const adImage = document.getElementById('adImage');
-const adText = document.getElementById('adText');
+function showAdPopup() {
+  const ad = ads[Math.floor(Math.random() * ads.length)];
+  document.getElementById("adTitle").textContent = ad.title;
+  document.getElementById("adText").textContent = ad.text;
+  document.getElementById("adImage").src = ad.image;
 
-function cycleAds() {
-  // Pick random ad
-  const randomAd = ads[Math.floor(Math.random() * ads.length)];
-  adImage.src = randomAd.img;
-  adImage.alt = randomAd.text;
-  adText.textContent = randomAd.text;
+  const popup = document.getElementById("adPopup");
+  popup.style.display = "block";
 
-  // Show popup
-  adPopup.style.display = 'block';
-
-  // After 5 seconds hide popup
+  // Hide after 5 seconds
   setTimeout(() => {
-    adPopup.style.display = 'none';
+    popup.style.display = "none";
   }, 5000);
 }
 
-// Start cycle: show ad every 10 seconds (5 seconds show + 5 seconds hide)
-window.onload = () => {
-  cycleAds();
-  setInterval(cycleAds, 10000);
-};
-
+// Keep showing new ad every 5 seconds
+window.addEventListener("load", () => {
+  showAdPopup(); // initial
+  setInterval(showAdPopup, 5000); // repeat every 5 sec
+});
 
   </script>
 </body>
